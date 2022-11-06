@@ -1,18 +1,26 @@
-import { LengthUnit } from '../interfaces/LengthUnit' 
-
+import { measurementUnit } from '../interfaces/measurementUnit'
+import { SUPPORTED_LENGTHS } from '../config/SupportedLengths'
 export class LengthConverter {
-  inputUnit: LengthUnit
-  outputUnit: LengthUnit
+  providedUnit: measurementUnit
+  expectedUnit: measurementUnit
 
-  constructor(inputUnit: LengthUnit, outputUnit: LengthUnit){
-    this.inputUnit = inputUnit
-    this.outputUnit = outputUnit
+  constructor(providedUnit: string, expectedUnit: string)
+  {
+    this.providedUnit = SUPPORTED_LENGTHS.find(unit => unit.abbreviation === providedUnit)!
+    this.expectedUnit = SUPPORTED_LENGTHS.find(unit => unit.abbreviation === expectedUnit)!
   }
 
-  public convert(input: number) {
-    const lengthInMeters = input * this.inputUnit.baseToMeter
-    const lengthInDesiredOutput = lengthInMeters * this.outputUnit.baseToMeter
-    
-    return lengthInDesiredOutput;
+  public convert(length: number): number {
+    return this.convertMeasurementFromBase(this.convertMeasurementToBase(length))
+  }
+
+  private convertMeasurementToBase(length: number): number
+  {
+    return Number((length * this.providedUnit.base).toFixed(4))
+  }
+
+  private convertMeasurementFromBase(length: number): number
+  {
+    return Number((length / this.expectedUnit.base).toFixed(4))
   }
 }
