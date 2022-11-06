@@ -10,7 +10,8 @@ A tool like this could explain how I would go about solving complex problems, as
 
 If you would like to test this project. 
 
-1. Clone the repository: `https://github.com/QuentinWatt/react-ts-measurement-converter.git react-ts-converter`
+1. Clone the repository: 
+`git clone https://github.com/QuentinWatt/react-ts-measurement-converter.git react-ts-converter`
 2. Move into the project directory `cd react-ts-converter`
 3. Run `npm install`
 
@@ -19,3 +20,4 @@ This project also includes jest tests. You can run those with `npm run test`.
 ## Want to learn more about my thought process in solving this problem?
 
 1. [How to approach this problem.](docs/first-thoughts.md)
+2. [Implementing the solution.](docs/implementing-the-solution.md)
