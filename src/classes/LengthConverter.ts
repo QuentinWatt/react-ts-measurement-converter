@@ -14,12 +14,12 @@ export class LengthConverter {
     return this.convertMeasurementFromBase(this.convertMeasurementToBase(length))
   }
 
-  private convertMeasurementToBase(length: number): number
+  protected convertMeasurementToBase(length: number): number
   {
     return Number((length * this.providedUnit.base).toFixed(4))
   }
 
-  private convertMeasurementFromBase(length: number): number
+  protected convertMeasurementFromBase(length: number): number
   {
     return Number((length / this.expectedUnit.base).toFixed(4))
   }
