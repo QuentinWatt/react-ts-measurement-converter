@@ -23,6 +23,33 @@ describe('it can set expected and provided units', () => {
     expect(converter.providedUnit.abbreviation).toBe('mm')
     expect(converter.providedUnit.base).toBe(0.001)
   })
+
+  it('returns null when an unsupported unit is provided', () => {
+    const converter = new LengthConverter()
+    const unsupportedProvidedUnit = converter.setProvidedUnit('l')
+    expect(unsupportedProvidedUnit).toBe(null)
+    const unsupportedExpectedUnit = converter.setExpectedUnit('ml')
+    expect(unsupportedExpectedUnit).toBe(null)
+  })
+
+  it('uses the default values when unsupported unit is provided', () => {
+    const converter = new LengthConverter()
+    converter.setProvidedUnit('l')
+    expect(converter.providedUnit.abbreviation).toBe('m')
+    expect(converter.providedUnit.base).toBe(1)
+    converter.setExpectedUnit('ml')
+    expect(converter.expectedUnit.abbreviation).toBe('yd')
+    expect(converter.expectedUnit.base).toBe(0.9144)
+  })
+
+  it('can return true or false when checking for unit support', () => {
+    const converter = new LengthConverter();
+    expect(converter.isSupportedUnit('m')).toBe(true)
+    expect(converter.isSupportedUnit('l')).toBe(false)
+    expect(converter.isSupportedUnit('ml')).toBe(false)
+    expect(converter.isSupportedUnit('km')).toBe(true)
+    expect(converter.isSupportedUnit('mk')).toBe(false)
+  })
 })
 
 describe('it converts yards to meters correctly', () => {

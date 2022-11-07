@@ -20,7 +20,7 @@ export class LengthConverter {
 
   public setProvidedUnit(unitAbbreviation: string): measurementUnit | null
   {
-    if(SUPPORTED_LENGTHS.find(unit => unit.abbreviation === unitAbbreviation)){
+    if(this.isSupportedUnit(unitAbbreviation)){
       this.providedUnit = SUPPORTED_LENGTHS.find(unit => unit.abbreviation === unitAbbreviation)!
       return this.providedUnit
     }
@@ -31,13 +31,18 @@ export class LengthConverter {
 
   public setExpectedUnit(unitAbbreviation: string): measurementUnit | null
   {
-    if(SUPPORTED_LENGTHS.find(unit => unit.abbreviation === unitAbbreviation)){
+    if(this.isSupportedUnit(unitAbbreviation)){
       this.expectedUnit = SUPPORTED_LENGTHS.find(unit => unit.abbreviation === unitAbbreviation)!
       return this.expectedUnit
     }
     else {
       return null
     }
+  }
+
+  public isSupportedUnit(unitAbbreviation: string): boolean
+  {
+    return SUPPORTED_LENGTHS.find(unit => unit.abbreviation === unitAbbreviation) ? true : false
   }
 
   protected convertMeasurementToBase(length: number): number

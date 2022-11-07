@@ -21,3 +21,4 @@ This project also includes jest tests. You can run those with `npm run test`.
 
 1. [How to approach this problem.](docs/first-thoughts.md)
 2. [Implementing the solution.](docs/implementing-the-solution.md)
+3. [Making the converter less prone to error.](docs/improving-how-units-are-set.md)
