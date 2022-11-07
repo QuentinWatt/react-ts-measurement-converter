@@ -1,7 +1,61 @@
 import { LengthConverter } from "./LengthConverter";
 
+describe('it can set expected and provided units', () => {
+  it('sets uses a default conversion of meters to yards', () => {
+    const converter = new LengthConverter()
+    expect(converter.providedUnit.abbreviation).toBe('m')
+    expect(converter.providedUnit.base).toBe(1)
+
+    expect(converter.expectedUnit.abbreviation).toBe('yd')
+    expect(converter.expectedUnit.base).toBe(0.9144)
+  })
+
+  it('sets the provided unit correctly', () => {
+    const converter = new LengthConverter()
+    converter.setProvidedUnit('yd')
+    expect(converter.providedUnit.abbreviation).toBe('yd')
+    expect(converter.providedUnit.base).toBe(0.9144)
+  })
+
+  it('sets the expected unit correctly', () => {
+    const converter = new LengthConverter()
+    converter.setProvidedUnit('mm')
+    expect(converter.providedUnit.abbreviation).toBe('mm')
+    expect(converter.providedUnit.base).toBe(0.001)
+  })
+
+  it('returns null when an unsupported unit is provided', () => {
+    const converter = new LengthConverter()
+    const unsupportedProvidedUnit = converter.setProvidedUnit('l')
+    expect(unsupportedProvidedUnit).toBe(null)
+    const unsupportedExpectedUnit = converter.setExpectedUnit('ml')
+    expect(unsupportedExpectedUnit).toBe(null)
+  })
+
+  it('uses the default values when unsupported unit is provided', () => {
+    const converter = new LengthConverter()
+    converter.setProvidedUnit('l')
+    expect(converter.providedUnit.abbreviation).toBe('m')
+    expect(converter.providedUnit.base).toBe(1)
+    converter.setExpectedUnit('ml')
+    expect(converter.expectedUnit.abbreviation).toBe('yd')
+    expect(converter.expectedUnit.base).toBe(0.9144)
+  })
+
+  it('can return true or false when checking for unit support', () => {
+    const converter = new LengthConverter();
+    expect(converter.isSupportedUnit('m')).toBe(true)
+    expect(converter.isSupportedUnit('l')).toBe(false)
+    expect(converter.isSupportedUnit('ml')).toBe(false)
+    expect(converter.isSupportedUnit('km')).toBe(true)
+    expect(converter.isSupportedUnit('mk')).toBe(false)
+  })
+})
+
 describe('it converts yards to meters correctly', () => {
-  const converter = new LengthConverter('yd', 'm')
+  const converter = new LengthConverter()
+  converter.setProvidedUnit('yd')
+  converter.setExpectedUnit('m')
 
   it('Converts 1 yard correctly', () => {
     const conversion: number = converter.convert(1)
@@ -25,7 +79,9 @@ describe('it converts yards to meters correctly', () => {
 })
 
 describe('Converts yards to cm correctly', () => {
-  const converter = new LengthConverter('yd', 'cm')
+  const converter = new LengthConverter()
+  converter.setProvidedUnit('yd')
+  converter.setExpectedUnit('cm')
 
   it('Converts 1 yard to cm correctly', () => {
     const convertedValue: number = converter.convert(1)
@@ -44,7 +100,9 @@ describe('Converts yards to cm correctly', () => {
 })
 
 describe('Converts millimeters to cm correctly', () => {
-  const converter = new LengthConverter('mm', 'cm')
+  const converter = new LengthConverter()
+  converter.setProvidedUnit('mm')
+  converter.setExpectedUnit('cm')
 
   it('Converts 1 mm to cm correctly', () => {
     const convertedValue: number = converter.convert(1)
@@ -63,7 +121,9 @@ describe('Converts millimeters to cm correctly', () => {
 })
 
 describe('Converts inches to mm correctly', () => {
-  const converter = new LengthConverter('in', 'mm')
+  const converter = new LengthConverter()
+  converter.setProvidedUnit('in')
+  converter.setExpectedUnit('mm')
 
   it('Converts 1 in to mm correctly', () => {
     const convertedValue: number = converter.convert(1)
@@ -82,7 +142,9 @@ describe('Converts inches to mm correctly', () => {
 })
 
 describe('Converts miles to km correctly', () => {
-  const converter = new LengthConverter('mi', 'km')
+  const converter = new LengthConverter()
+  converter.setProvidedUnit('mi')
+  converter.setExpectedUnit('km')
 
   it('Converts 1 mi to km correctly', () => {
     const convertedValue: number = converter.convert(1)
